@@ -10,6 +10,12 @@ Projet Algorithmique et structure de donnée 1 L1
 
 https://github.com/Jadeb21/cdataframe-brana-davenne.git
 
+- Idée principale de notre projet :
+
+Le CDataframe que nous avons conçu à pour but de vous faciliter la manipulation de valeur.
+En effet, avec nos multiples fonctionnalités présentés dans la partie "Fonctionnalités principales de notre application",
+vous pouvez réaliser tout-un-tas de chose.
+
 - Rapport de notre projet :
 
 Rapport CDataframe.pdf
