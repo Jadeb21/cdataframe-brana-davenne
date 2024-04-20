@@ -30,6 +30,6 @@ Appuyer sur le bouton vert (run) en haut et laissez vous guider !
 
 Pour le moment la fonctionnalité de la case 10 ne fonctionne pas
 La case 12 n'est pas cumulable avec la 9 si le nombre de colonne de départ est strictement inférieur à 4
-La case 12 et 9 n'est pas cumulable avec l'ajout de colonne présente case 7:
+Les cases 12 et 9 ne sont pas cumulable avec l'ajout de colonne présente case 7:
 Si l'on ajoute une colonne, elle s'affiche sur le CDATAFRAME mais aucun nom ne figurera pour cette colonne dans la case 12
 Si l'on essaie de nommer cette nouvelle colonne, le programme cesse de fonctionner
