@@ -34,5 +34,10 @@ void nom_colonne(CDATAFRAME* cdata);
 
 int nombre_Lignes(CDATAFRAME *cdata);
 int nombre_Colonnes(CDATAFRAME *cdata);
+int compter_egal(CDATAFRAME* cdata, double x);
+int compter_superieures(CDATAFRAME* cdata, double x);
+int compter_inferieures(CDATAFRAME* cdata, double x);
+
+void free_cdataframe(CDATAFRAME* cdata);
 
 #endif //PROJET_CDATAFRAME_H

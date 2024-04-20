@@ -44,12 +44,15 @@ int main(){
         printf("6. Supprimer une ligne de valeur\n");
         printf("7. Ajouter une colonne de valeur\n");
         printf("8. Supprimer une colonne de valeur\n");
-        printf("9. Renommer une colonne\n"); //ne fonctionne pas
+        printf("9. Renommer une colonne\n");
         printf("10. Vérifier l'existance d'une valeur dans le cdataframe\n"); //ne fonctionne pas
         printf("11. Accéder/remplacer la valeur se trouvant dans une cellule du CDATAFRAME\n");
-        printf("12. Afficher le nom des colonnes\n"); //ne fonctionne pas
+        printf("12. Afficher le nom des colonnes\n");
         printf("13. Afficher le nombre de ligne\n");
         printf("14. Afficher le nombre de colonne\n");
+        printf("15. Afficher le nombre de cellules égales à une valeur donnée\n");
+        printf("16. Afficher le nombre de cellules supérieurs à une valeur donnée\n");
+        printf("17. Afficher le nombre de cellules inférieurs à une valeur donnée\n");
         printf("18. Quitter\n");
         scanf("%d", &choix);
         switch(choix){
@@ -131,25 +134,20 @@ int main(){
                 break;
             }
             case 10:
-                afficher_cdataframe(cdata);
-                int value_to_check;
-                printf("Entrer une valeur à recherché\n");
-                scanf("%d", &value_to_check);
-                if (valeurExiste(&cdata, value_to_check)) {
-                    printf("La valeur %d existe dans le CDataframe.\n", value_to_check);
-                } else {
-                    printf("La valeur %d n'existe pas dans le CDataframe.\n", value_to_check);
-                }
+                printf("Entrez la valeur à rechercher :\n");
+                int value;
+                scanf("%d", &value);
+                valeurExiste(&cdata, value);
                 break;
             case 11:
                 printf("ATTENTION : la case 1 correspond à la colonne et à la ligne 0\n");
-                printf("Quelle ligne voulez-vous replacer ?");
+                printf("Quelle ligne voulez-vous replacer ?\n");
                 int ligne;
                 scanf("%d", &ligne);
                 int colonne;
-                printf("Quelle colonne voulez-vous replacer ?");
+                printf("Quelle colonne voulez-vous replacer ?\n");
                 scanf("%d", &colonne);
-                printf("Quel sera la nouvelle valeur ?");
+                printf("Quel sera la nouvelle valeur ?\n");
                 int nouvelle_valeur;
                 scanf("%d", &nouvelle_valeur);
                 replace_valeur(cdata, ligne, colonne, nouvelle_valeur);
@@ -171,11 +169,36 @@ int main(){
                 printf("Nombre de colonnes : %d\n", colonnes);
             }
                 break;
+            case 15:{
+                double x;
+                printf("Saisissez la valeur x :\n");
+                scanf("%lf", &x);
+                printf("Nombre de cellules contenant la valeur %lf : %d\n", x, compter_egal(cdata, x));
+                break;
+            }
+            case 16: {
+                double x;
+                printf("Saisissez la valeur x :\n");
+                scanf("%lf", &x);
+                printf("Nombre de cellules contenant une valeur supérieure à %lf : %d\n", x, compter_superieures(cdata, x));
+                break;
+            }
+            case 17: {
+                double x;
+                printf("Saisissez la valeur x :\n");
+                scanf("%lf", &x);
+                printf("Nombre de cellules contenant une valeur inférieure à %lf : %d\n", x, compter_inferieures(cdata, x));
+                break;
+            }
             case 18:
                 printf("Merci d'avoir utilisé notre cdataframe, a bientot !");
                 break;
+            default:
+                printf("Choix invalide. Veuillez choisir une option valide.\n");
+                break;
     }
     }
+    free_cdataframe(cdata);
     return 0;
 }
 

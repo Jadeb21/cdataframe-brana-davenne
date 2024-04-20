@@ -207,15 +207,17 @@ void rename_title(CDATAFRAME* cdata, int column_index, char* new_title) {
 int valeurExiste(CDATAFRAME* cdata, int value) {
     for (int i = 0; i < cdata->num_lignes; ++i) {
         for (int j = 0; j < cdata->num_columns; ++j) {
-            if (cdata->tab[i][j] == value) {
-                printf("La valeur existe\n");
-                return 1;
+            if (cdata->tab[i][j] == value){
+                printf("La valeur est présente !\n");
             }
-        }
+            else {
+                printf("La valeur n'est pas présente dans le cdataframe.\n");
+            }
+        printf("\n");
     }
-
-    return 0;
 }
+}
+
 
 void replace_valeur(CDATAFRAME* cdata, int ligne, int column, double new_value) {
     if (cdata == NULL) {
@@ -248,3 +250,63 @@ int nombre_Colonnes(CDATAFRAME *cdata) {
     return cdata->num_columns;
 }
 
+int compter_egal(CDATAFRAME* cdata, double x) {
+    int count = 0;
+    for (int i = 0; i < cdata->num_lignes; ++i) {
+        for (int j = 0; j < cdata->num_columns; ++j) {
+            if (cdata->tab[i][j] == x) {
+                count++;
+            }
+        }
+    }
+
+    return count;
+}
+
+int compter_superieures(CDATAFRAME* cdata, double x) {
+    int count = 0;
+    for (int i = 0; i < cdata->num_lignes; ++i) {
+        for (int j = 0; j < cdata->num_columns; ++j) {
+            if (cdata->tab[i][j] > x) {
+                count++;
+            }
+        }
+    }
+
+    return count;
+}
+
+int compter_inferieures(CDATAFRAME* cdata, double x) {
+    int count = 0;
+    for (int i = 0; i < cdata->num_lignes; ++i) {
+        for (int j = 0; j < cdata->num_columns; ++j) {
+            if (cdata->tab[i][j] < x) {
+                count++;
+            }
+        }
+    }
+
+    return count;
+}
+
+void free_cdataframe(CDATAFRAME* cdata) {
+    if (cdata == NULL) {
+        return;
+    }
+
+    // Libérer la mémoire allouée pour le tableau de données
+    for (int i = 0; i < cdata->num_lignes; i++) {
+        free(cdata->tab[i]);
+    }
+    free(cdata->tab);
+
+    // Libérer la mémoire allouée pour chaque colonne
+    for (int i = 0; i < cdata->num_columns; i++) {
+        free(cdata->columns[i]->tab);
+        free(cdata->columns[i]);
+    }
+    free(cdata->columns);
+
+    // Libérer la mémoire allouée pour la structure CDATAFRAME elle-même
+    free(cdata);
+}
