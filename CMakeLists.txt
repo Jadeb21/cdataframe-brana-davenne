@@ -6,5 +6,5 @@ set(CMAKE_C_STANDARD 11)
 add_executable(projet main.c
         CDataframe.c
         CDataframe.h
-        function.c
-        function.h)
+        colomn.c
+        colomn.h)

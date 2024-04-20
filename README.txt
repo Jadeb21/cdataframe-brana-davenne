@@ -8,7 +8,11 @@ Projet Algorithmique et structure de donnée 1 L1
 
 - Lien direct vers le dépôt Git de notre projet :
 
-- Rapport de notre projet : Rapport CDataframe.pdf
+https://github.com/Jadeb21/cdataframe-brana-davenne.git
+
+- Rapport de notre projet :
+
+Rapport CDataframe.pdf
 
 - Fonctionnalités principales de notre application :
 
@@ -20,3 +24,6 @@ D'autres fonctionnalités existes comme l'ajout et la suppression de ligne ou de
 
 Appuyer sur le bouton vert (run) en haut et laissez vous guider !
 
+-Erreur du projet :
+
+Pour le moment les fonctionnalités des cases 10, 12 ne fonctionnent pas

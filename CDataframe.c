@@ -5,37 +5,58 @@
 #include "CDataframe.h"
 #include <stdlib.h>
 #define MALLOC_SIZE 256
+#define MAX_TITLE_LENGTH 50
 #include <stdio.h>
+#include <string.h>
 
 //Création CDataframe vide
 CDATAFRAME *create_cdataframe(int num_columns, int num_lignes){
     CDATAFRAME* cdata = (CDATAFRAME*)malloc(sizeof(CDATAFRAME));
     if (cdata == NULL) {
-        printf("Erreur lors de l'allocation de mémoire pour le CDataframe.\n");
+        printf("Erreur.\n");
         exit(EXIT_FAILURE);
     }
     cdata->num_lignes = num_lignes;
     cdata->num_columns = num_columns;
     cdata->tab = (double**)malloc(num_lignes * sizeof(double*));
     if (cdata->tab == NULL) {
-        printf("Erreur lors de l'allocation de mémoire pour les données du CDataframe.\n");
+        printf("Erreur.\n");
         exit(EXIT_FAILURE);
     }
     for (int i = 0; i < num_lignes; i++) {
         cdata->tab[i] = (double*)malloc(num_columns * sizeof(double));
         if (cdata->tab[i] == NULL) {
-            printf("Erreur lors de l'allocation de mémoire pour les données du CDataframe.\n");
+            printf("Erreur.\n");
             exit(EXIT_FAILURE);
         }
     }
 
-    //Permet l'initialisation de plusieurs colonnes lors de la saisie utilisateur
+    // Allouer de la mémoire pour les noms de colonnes
     cdata->columns = (COLUMN**)malloc(num_columns * sizeof(COLUMN*));
+    if (cdata->columns == NULL) {
+        printf("Erreur.\n");
+        exit(EXIT_FAILURE);
+    }
     for (int i = 0; i < num_columns; i++) {
         cdata->columns[i] = (COLUMN*)malloc(sizeof(COLUMN));
+        if (cdata->columns[i] == NULL) {
+            printf("Erreur.\n");
+            exit(EXIT_FAILURE);
+        }
+        // Allouer de la mémoire pour le titre de la colonne
+        cdata->columns[i]->title = (char*)malloc(MAX_TITLE_LENGTH * sizeof(char));
+        if (cdata->columns[i]->title == NULL) {
+            printf("Erreur.\n");
+            exit(EXIT_FAILURE);
+        }
         cdata->columns[i]->tl = num_lignes;
         cdata->columns[i]->tab = (int*)malloc(num_lignes * sizeof(int));
+        if (cdata->columns[i]->tab == NULL) {
+            printf("Erreur.\n");
+            exit(EXIT_FAILURE);
+        }
     }
+
     return cdata;
 }
 
@@ -44,7 +65,7 @@ void input_user(CDATAFRAME* cdata){
     for (int i = 0; i < cdata->num_lignes; i++) {
         printf("Remplisser la ligne %d :\n", i+1);
         for (int j = 0; j < cdata->num_columns; j++) {
-            printf("Veuillez mettre la valeur de la colonne %d :", j+1);
+            printf("Saisir la valeur de la colonne %d :", j+1);
             scanf("%lf", &cdata->tab[i][j]);
         }
     }
@@ -78,32 +99,32 @@ void afficher_cdataframe(CDATAFRAME* cdata){
     }
 }
 
-void afficher_limit_lignes(CDATAFRAME* cdata, int lim_ligne){
+void afficher_limit_lignes(CDATAFRAME* cdata, int lim_ligne) {
     printf("Affichage des %d premières lignes :\n", lim_ligne);
-    for (int i = 0;  i < lim_ligne && i < cdata->num_lignes; i++) {
+    for (int i = 0; i < lim_ligne && i < cdata->num_lignes; i++) {
         for (int j = 0; j < cdata->num_columns; j++) {
-            printf("%d\t", cdata->columns[j]->tab[i]);
+            printf("%.2f\t", cdata->tab[i][j]);
         }
         printf("\n");
     }
 }
 
 void afficher_limit_col(CDATAFRAME* cdata, int lim_col) {
-    printf("Affichage des %d colonnes :\n", lim_col);
-    for (int i=0; i < cdata->num_lignes; i++){
-        for (int j=0; j < lim_col && j < cdata->num_columns; j++){
-            printf("%d\t", cdata->columns[j]->tab[i]);
+    printf("Affichage des %d premières colonnes :\n", lim_col);
+    for (int i = 0; i < cdata->num_lignes; i++) {
+        for (int j = 0; j < lim_col && j < cdata->num_columns; j++) {
+            printf("%.2f\t", cdata->tab[i][j]);
         }
         printf("\n");
     }
 }
 
-void afficher_limit_colligne(CDATAFRAME* cdata, int lim_lignes, int lim_colo){
-    printf("Affichage des %d colonne(s) ", lim_colo);
-    printf("et des %d ligne(s)\n", lim_lignes);
-    for (int i=0; i < lim_lignes && i < cdata->num_lignes; i++){
-        for (int j=0; j < lim_colo && j < cdata->num_columns; j++){
-            printf("%d\t", cdata->columns[j]->tab[i]);
+void afficher_limit_colligne(CDATAFRAME* cdata, int lim_lignes, int lim_colo) {
+    printf("Affichage des %d colonnes ", lim_colo);
+    printf("et des %d ligne(s):\n", lim_lignes);
+    for (int i = 0; i < lim_lignes && i < cdata->num_lignes; i++) {
+        for (int j = 0; j < lim_colo && j < cdata->num_columns; j++) {
+            printf("%.2f\t", cdata->tab[i][j]);
         }
         printf("\n");
     }
@@ -119,9 +140,18 @@ void ajout_ligne_valeur(CDATAFRAME* cdata, double* val){
 }
 
 void delete_ligne_valeur(CDATAFRAME* cdata, int index){
+    if (index < 0 || index >= cdata->num_lignes) {
+        printf("Erreur : Indice de ligne invalide.\n");
+        return;
+    }
+
+    // Libérer la mémoire allouée pour la ligne à supprimer
+    free(cdata->tab[index]);
+
     for (int i = index; i < cdata->num_lignes - 1; i++) {
         cdata->tab[i] = cdata->tab[i + 1];
     }
+    cdata->tab = (double**)realloc(cdata->tab, (cdata->num_lignes - 1) * sizeof(double*));
 
     cdata->num_lignes--;
 }
@@ -136,10 +166,85 @@ void ajout_colonne_valeur(CDATAFRAME* cdata, double* val){
     }
 }
 
-void delete_colonne_valeur(CDATAFRAME* cdata, int indice){
-    for (int i = indice; i < cdata->num_columns - 1; i++) {
-        cdata->tab[i] = cdata->tab[i + 1];
+void delete_colonne_valeur(CDATAFRAME* cdata, int index){
+    if (index < 0 || index >= cdata->num_columns) {
+        printf("Erreur : Indice de colonne invalide.\n");
+        return;
     }
 
+    // Libérer la mémoire allouée pour la colonne à supprimer
+    for (int i = 0; i < cdata->num_lignes; i++) {
+        for (int j = index; j < cdata->num_columns - 1; j++) {
+            cdata->tab[i][j] = cdata->tab[i][j + 1];
+        }
+        // Réallouer la mémoire
+        cdata->tab[i] = (double*)realloc(cdata->tab[i], (cdata->num_columns - 1) * sizeof(double));
+    }
+    for (int i = index; i < cdata->num_columns - 1; i++) {
+        cdata->columns[i] = cdata->columns[i + 1];
+    }
     cdata->num_columns--;
 }
+
+void rename_title(CDATAFRAME* cdata, int column_index, char* new_title) {
+
+    if (column_index < 0 || column_index >= cdata->num_columns) {
+        printf("Erreur : Index de colonne invalide.\n");
+        return;
+    }
+
+    if (new_title == NULL) {
+        printf("Erreur : Le nouveau titre est vide.\n");
+        return;
+    }
+
+    strncpy(cdata->columns[column_index]->title, new_title, MALLOC_SIZE - 1);
+    cdata->columns[column_index]->title[MALLOC_SIZE - 1] = '\0';
+
+    printf("La colonne %d se nomme maintenant %s.\n", column_index, cdata->columns[column_index]->title);
+}
+
+int valeurExiste(CDATAFRAME* cdata, int value) {
+    for (int i = 0; i < cdata->num_lignes; ++i) {
+        for (int j = 0; j < cdata->num_columns; ++j) {
+            if (cdata->tab[i][j] == value) {
+                printf("La valeur existe\n");
+                return 1;
+            }
+        }
+    }
+
+    return 0;
+}
+
+void replace_valeur(CDATAFRAME* cdata, int ligne, int column, double new_value) {
+    if (cdata == NULL) {
+        printf("Erreur.\n");
+        return;
+    }
+
+    if (ligne < 0 || ligne >= cdata->num_lignes || column < 0 || column >= cdata->num_columns) {
+        printf("Erreur : Indice de la ligne ou de la colonne invalide.\n");
+        return;
+    }
+
+    cdata->tab[ligne][column] = new_value;
+    printf("La valeur à la ligne %d et à la colonne %d a été remplacée par %.2lf.\n", ligne, column, new_value);
+}
+
+void nom_colonne(CDATAFRAME* cdata) {
+    printf("Noms des colonnes :\n");
+    for (int i = 0; i < cdata->num_columns; i++) {
+        printf("%s\t", cdata->columns[i]->title);
+    }
+    printf("\n");
+}
+
+int nombre_Lignes(CDATAFRAME *cdata) {
+    return cdata->num_lignes;
+}
+
+int nombre_Colonnes(CDATAFRAME *cdata) {
+    return cdata->num_columns;
+}
+

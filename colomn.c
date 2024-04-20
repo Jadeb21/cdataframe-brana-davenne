@@ -3,7 +3,7 @@
 //
 #include <stdio.h>
 #include <malloc.h>
-#include "function.h"
+#include "colomn.h"
 #define MALLOC_SIZE 256
 
 COLUMN *create_column(char* title) {

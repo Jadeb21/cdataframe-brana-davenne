@@ -2,8 +2,9 @@
 // Created by jadeb on 28/03/2024.
 //
 
-#ifndef PROJET_FUNCTION_H
-#define PROJET_FUNCTION_H
+#ifndef PROJET_COLOMN_H
+#define PROJET_COLOMN_H
+
 
 typedef struct {
     char *title;
@@ -22,4 +23,4 @@ int more_value(COLUMN *col, int value);
 int less_value(COLUMN *col, int value);
 int equal_value(COLUMN *col, int value);
 
-#endif //PROJET_FUNCTION_H
+#endif //PROJET_COLOMN_H
