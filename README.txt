@@ -35,6 +35,6 @@ Appuyer sur le bouton vert (run) en haut et laissez vous guider !
 
 -Erreur du projet :
 
-Pour le moment la fonctionnalité de la case 10 ne fonctionne pas
+La fonctionnalité de la case 10 fonctionne enfin !
 Les cases 12 et 9 ne sont pas cumulable:
 Si l'on renomme une case supérieur ou égal à 2, le programme s'arrete

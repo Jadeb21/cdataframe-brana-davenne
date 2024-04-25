@@ -204,19 +204,25 @@ void rename_title(CDATAFRAME* cdata, int column_index, char* new_title) {
     printf("La colonne %d se nomme maintenant %s.\n", column_index, cdata->columns[column_index]->title);
 }
 
-int valeurExiste(CDATAFRAME* cdata, int value) {
-    for (int i = 0; i < cdata->num_lignes; ++i) {
-        for (int j = 0; j < cdata->num_columns; ++j) {
-            if (cdata->tab[i][j] == value){
-                printf("La valeur est présente !\n");
+int valeurExiste(CDATAFRAME* cdata, double value) {
+    int test;
+    for (int i = 0; i < cdata->num_lignes; i++) {
+        for (int j = 0; j < cdata->num_columns; j++) {
+
+            if (cdata->tab[i][j] == value) {
+                test = cdata->tab[i][j];
             }
-            else {
-                printf("La valeur n'est pas présente dans le cdataframe.\n");
-            }
-        printf("\n");
+
+        }
     }
+    if (test == value) {
+    printf("La valeur est présente !\n");
+}
+    else {
+printf("La valeur n'est pas présente dans le cdataframe.\n");
 }
 }
+
 
 
 void replace_valeur(CDATAFRAME* cdata, int ligne, int column, double new_value) {

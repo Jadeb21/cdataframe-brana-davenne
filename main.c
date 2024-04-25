@@ -127,9 +127,9 @@ int main(){
                         }
                         case 10:
                             printf("Entrez la valeur à rechercher :\n");
-                            int value;
-                            scanf("%d", &value);
-                            valeurExiste(&cdata, value);
+                            double value;
+                            scanf("%lf", &value);
+                            valeurExiste(cdata, value);
                             break;
                         case 11:
                             printf("ATTENTION : la case 1 correspond à la colonne et à la ligne 0\n");
@@ -299,9 +299,9 @@ int main(){
                         }
                         case 10:
                             printf("Entrez la valeur à rechercher :\n");
-                            int value;
-                            scanf("%d", &value);
-                            valeurExiste(&cdata, value);
+                            double value;
+                            scanf("%lf", &value);
+                            valeurExiste(cdata, value);
                             break;
                         case 11:
                             printf("ATTENTION : la case 1 correspond à la colonne et à la ligne 0\n");

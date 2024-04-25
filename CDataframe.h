@@ -28,7 +28,7 @@ void delete_ligne_valeur(CDATAFRAME* cdata, int index);
 void ajout_colonne_valeur(CDATAFRAME* cdata, double* val);
 void delete_colonne_valeur(CDATAFRAME* cdata, int indice);
 void rename_title(CDATAFRAME* cdata, int column_index, char* new_title);
-int valeurExiste(CDATAFRAME* cdata, int value);
+int valeurExiste(CDATAFRAME* cdata, double value);
 void replace_valeur(CDATAFRAME* cdata, int ligne, int column, double new_value);
 void nom_colonne(CDATAFRAME* cdata);
 
