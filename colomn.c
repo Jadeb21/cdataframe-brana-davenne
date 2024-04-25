@@ -43,10 +43,11 @@ void delete_column(COLUMN **col){
 void print_col(COLUMN* col){
     printf("Titre de la colonne : %s\n", col->title);
     printf("Contenu de la colonne :\n");
-    for (int i = 0; i<col->tl; i++){
+    for (int i = 0; i < col->tl; i++){
         printf("[%d] %d\n", i, col->tab[i]);
     }
 }
+
 
 int count_occurences(COLUMN *col, int value) {
     int count = 0;
