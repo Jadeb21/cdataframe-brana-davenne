@@ -26,7 +26,7 @@ Rapport CDataframe.pdf
 Vous pouvez choisir entre un CDataframe déjà rempli ou vous pouvez le remplir vous meme.
 Ensuite vous pourrez choisir entre afficher tout le cdataframe, afficher certaine ligne ou bien certaine colonne du CDataframe
 D'autres fonctionnalités existes comme l'ajout et la suppression de ligne ou de colonne.
-Toutes nos fonctionnalités marchent indépendamment (sauf la 10) mais certaine ne peuvent pas etre cumulé :
+Toutes nos fonctionnalités marchent indépendamment mais certaine ne peuvent pas etre cumulé :
 pour plus d'information, merci de consulté la partie "Erreur du projet" présente en bas de la page.
 
 - Instructions d'exécution de notre code :

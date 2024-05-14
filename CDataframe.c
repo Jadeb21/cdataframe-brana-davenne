@@ -65,7 +65,7 @@ void input_user(CDATAFRAME* cdata){
     for (int i = 0; i < cdata->num_lignes; i++) {
         printf("Remplisser la ligne %d :\n", i+1);
         for (int j = 0; j < cdata->num_columns; j++) {
-            printf("Saisir la valeur de la colonne %d :", j+1);
+            printf("Saisir la valeur de la colonne %d :\n", j+1);
             scanf("%lf", &cdata->tab[i][j]);
         }
     }
